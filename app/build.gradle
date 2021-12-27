@@ -82,4 +82,9 @@ dependencies {
     //Navigation
     implementation "androidx.navigation:navigation-fragment-ktx:2.3.5"
     implementation "androidx.navigation:navigation-ui-ktx:2.3.5"
+
+    //Debugg for google Chrome
+    def stetho_version = "1.5.1"
+    implementation "com.facebook.stetho:stetho:$stetho_version"
+    implementation "com.facebook.stetho:stetho-okhttp3:$stetho_version"
 }

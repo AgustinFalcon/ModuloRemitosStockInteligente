@@ -24,9 +24,9 @@ class RemitoAdapter() : RecyclerView.Adapter<RemitoAdapter.MyViewHolder>() {
         holder.binding.checkBoxAll.isChecked = checkBoxStatesArray.get(position, false)
 
         holder.binding.apply {
-            tvCantidadRemito.text = remito.cantidad
-            tvFechaRemito.text = remito.fecha
-            tvNumeroRemito.text = remito.numero
+            tvCantidadRemito.text = "Cantidad: ${remito.cantidad}"
+            tvFechaRemito.text = "Fecha: ${remito.fecha}"
+            tvNumeroRemito.text = "Numero: ${remito.numero}"
         }
     }
 
