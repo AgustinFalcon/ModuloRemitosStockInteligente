@@ -13,9 +13,13 @@ import javax.inject.Inject
 @HiltViewModel
 class RemitoViewModel @Inject constructor(private val remitoRepository: RemitoRepository) : ViewModel(){
 
-    private val _repository = MutableLiveData<List<Remito>>()
+    private val _responseRemito = MutableLiveData<List<Remito>>()
     val responseRemito: MutableLiveData<List<Remito>>
-        get() = _repository
+        get() = _responseRemito
+
+    private val _postRemito = MutableLiveData<List<Remito>>()
+    val postRemito: MutableLiveData<List<Remito>>
+        get() = _postRemito
 
     init {
         getAllRemitos()
@@ -25,9 +29,22 @@ class RemitoViewModel @Inject constructor(private val remitoRepository: RemitoRe
         viewModelScope.launch {
             remitoRepository.getAllRemitos().let { response ->
                 if(response.isSuccessful){
-                    _repository.postValue(response.body()?.remitos)
+                    _responseRemito.postValue(response.body()?.remitos)
                 } else {
                     Log.d(TAG, "Error: ${response.code()}")
+                }
+            }
+        }
+    }
+
+    fun postRemitos(remitos: HashMap<Int, String>){
+        viewModelScope.launch {
+            remitoRepository.sendRemitos(remitos).let { response ->
+                if(response.isSuccessful){
+                    _postRemito.postValue(response.body()?.remitos)
+                }else{
+                    Log.d(TAG, "Error code: ${response.code()}")
+                    Log.d(TAG, "Error del post: ${response.errorBody()}")
                 }
             }
         }

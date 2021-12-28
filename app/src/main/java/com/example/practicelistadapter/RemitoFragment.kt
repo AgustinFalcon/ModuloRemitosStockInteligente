@@ -2,22 +2,16 @@ package com.example.practicelistadapter
 
 import android.os.Bundle
 import android.util.Log
-import android.util.SparseBooleanArray
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.util.forEach
-import androidx.core.util.size
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.practicelistadapter.data.Remito
-import com.example.practicelistadapter.data.RemitoResponse
 import com.example.practicelistadapter.databinding.FragmentRemitoBinding
 import com.example.practicelistadapter.databinding.ItemRecyclerviewBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.math.sign
 
 @AndroidEntryPoint
 class RemitoFragment : Fragment(){
@@ -42,7 +36,6 @@ class RemitoFragment : Fragment(){
 
 
 
-
         return binding.root
     }
 
@@ -58,7 +51,10 @@ class RemitoFragment : Fragment(){
             remitoAdapter.remitos = it
             Log.d(TAG, remitoAdapter.checkBoxStatesArray.toString())
 
+            //Clicked button
             binding.btnPostDetailsRemitos.setOnClickListener {
+                sendDataPost()
+                Log.d(TAG, "Post: ${remitoViewModel.postRemitos(remitoAdapter.hashMap)}")
                 remitoAdapter.checkBoxStatesArray.forEach{ i: Int, b: Boolean ->
                     if(b){
                         hashMap[i] = b
@@ -70,6 +66,10 @@ class RemitoFragment : Fragment(){
                 Log.d(TAG, "Array of adapter ${remitoAdapter.checkBoxStatesArray}")
             }
         })
+    }
+
+    private fun sendDataPost(){
+        remitoViewModel.postRemitos(remitoAdapter.hashMap)
     }
 
     companion object{

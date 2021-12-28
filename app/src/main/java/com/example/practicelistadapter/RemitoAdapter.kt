@@ -5,6 +5,7 @@ import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +14,7 @@ import com.example.practicelistadapter.databinding.ItemRecyclerviewBinding
 
 class RemitoAdapter() : RecyclerView.Adapter<RemitoAdapter.MyViewHolder>() {
 
+    var hashMap: HashMap<Int, String> = HashMap()
     var checkBoxStatesArray = SparseBooleanArray()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -59,6 +61,8 @@ class RemitoAdapter() : RecyclerView.Adapter<RemitoAdapter.MyViewHolder>() {
                 if(!checkBoxStatesArray.get(adapterPosition, false)){
                     checkbox.isChecked = true
                     checkBoxStatesArray.put(adapterPosition, true)
+                    //Ver como le paso estos datos al post
+                    hashMap[adapterPosition] = remitos[adapterPosition].codigo
                 }else{
                     checkbox.isChecked = false
                     checkBoxStatesArray.put(adapterPosition, false)
