@@ -53,7 +53,9 @@ class RemitoFragment : Fragment(){
 
             //Clicked button
             binding.btnPostDetailsRemitos.setOnClickListener {
+                //Send the data selected
                 sendDataPost()
+
                 Log.d(TAG, "Post: ${remitoViewModel.postRemitos(remitoAdapter.hashMap)}")
                 remitoAdapter.checkBoxStatesArray.forEach{ i: Int, b: Boolean ->
                     if(b){
@@ -64,12 +66,20 @@ class RemitoFragment : Fragment(){
                 hashMap.clear()
                 Log.d(TAG, "Mine array2 $hashMap")
                 Log.d(TAG, "Array of adapter ${remitoAdapter.checkBoxStatesArray}")
+
+                //Get the remitos selected
+                getEpcRemito()
+                Log.d(TAG, "Get epcs with remitos selected: ${getEpcRemito()}")
             }
         })
     }
 
     private fun sendDataPost(){
         remitoViewModel.postRemitos(remitoAdapter.hashMap)
+    }
+
+    private fun getEpcRemito(){
+        remitoViewModel.getEpcofRemitos()
     }
 
     companion object{

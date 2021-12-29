@@ -16,6 +16,7 @@ interface ApiService {
     @POST(Constans.END_POINT_POST_REMITO)
     suspend fun sendRemitos(@Body remitos: HashMap<Int, String>) :Response<RemitoResponse>
 
+    //The url for the post and this get are the same
     @GET(Constans.END_POINT_POST_REMITO)
     suspend fun getEpcofRemitos(): Response<GetEpcRemitoResponse>
 }

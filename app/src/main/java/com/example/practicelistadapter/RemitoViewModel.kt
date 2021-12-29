@@ -21,9 +21,9 @@ class RemitoViewModel @Inject constructor(private val remitoRepository: RemitoRe
     val postRemito: MutableLiveData<List<Remito>>
         get() = _postRemito
 
-    private val _getEpcofRemitos = MutableLiveData<List<GetEpcRemito>>()
-    val getEpcofRemitos: MutableLiveData<List<GetEpcRemito>>
-        get() = _getEpcofRemitos
+    private val _getEpcofRemito = MutableLiveData<List<GetEpcRemito>>()
+    val getEpcofRemito: MutableLiveData<List<GetEpcRemito>>
+        get() = _getEpcofRemito
 
     init {
         getAllRemitos()
@@ -58,7 +58,7 @@ class RemitoViewModel @Inject constructor(private val remitoRepository: RemitoRe
         viewModelScope.launch {
             remitoRepository.getEpcofRemitos().let { response ->
                 if(response.isSuccessful){
-                    _getEpcofRemitos.postValue(response.body()?.epcRemito)
+                    _getEpcofRemito.postValue(response.body()?.epcRemito)
                 }else{
                     Log.d(TAG, "Error code: ${response.code()}")
                     Log.d(TAG, "Error del post: ${response.errorBody()}")

@@ -66,6 +66,7 @@ class RemitoAdapter() : RecyclerView.Adapter<RemitoAdapter.MyViewHolder>() {
                 }else{
                     checkbox.isChecked = false
                     checkBoxStatesArray.put(adapterPosition, false)
+                    hashMap.remove(adapterPosition)
                 }
             }
         }
