@@ -1,15 +1,13 @@
-package com.example.practicelistadapter
+package com.example.practicelistadapter.adapter
 
 
 import android.util.SparseBooleanArray
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.practicelistadapter.data.Remito
+import com.example.practicelistadapter.data.remito.get.Remito
 import com.example.practicelistadapter.databinding.ItemRecyclerviewBinding
 
 class RemitoAdapter() : RecyclerView.Adapter<RemitoAdapter.MyViewHolder>() {

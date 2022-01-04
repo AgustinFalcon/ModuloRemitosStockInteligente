@@ -1,6 +1,7 @@
 package com.example.practicelistadapter
 
 import com.example.practicelistadapter.data.Constans
+import com.example.practicelistadapter.service.ApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -1,4 +1,4 @@
-package com.example.practicelistadapter
+package com.example.practicelistadapter.fragment
 
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +9,9 @@ import android.view.ViewGroup
 import androidx.core.util.forEach
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.practicelistadapter.R
+import com.example.practicelistadapter.viewmodel.RemitoViewModel
+import com.example.practicelistadapter.adapter.RemitoAdapter
 import com.example.practicelistadapter.databinding.FragmentRemitoBinding
 import com.example.practicelistadapter.databinding.ItemRecyclerviewBinding
 import com.google.android.material.snackbar.Snackbar
@@ -22,6 +25,7 @@ class RemitoFragment : Fragment(){
     private lateinit var itemRemitoBinding : ItemRecyclerviewBinding
     private lateinit var remitoAdapter: RemitoAdapter
     var hashMap: HashMap<Int, Boolean> = HashMap()
+    var otroMap = HashMap<String, String>()
 
 
 
@@ -38,7 +42,7 @@ class RemitoFragment : Fragment(){
         //Clicked button
         binding.btnPostDetailsRemitos.setOnClickListener {
             //Send the data selected
-            remitoViewModel.postRemitos(remitoAdapter.hashMap)
+            remitoViewModel.sendData(remitoAdapter.hashMap)
             Log.d(TAG, "Datos enviados ${remitoAdapter.hashMap}")
 
             Snackbar.make(requireView(), "Datos enviados al servidor", Snackbar.LENGTH_SHORT).show()
@@ -50,10 +54,12 @@ class RemitoFragment : Fragment(){
             Log.d(TAG, "Mine array1 $hashMap")
             hashMap.clear()
             Log.d(TAG, "Array of adapter ${remitoAdapter.checkBoxStatesArray}")
-
-            Log.d(TAG, "Valor del post en RemitoFragment = ${remitoViewModel.postRemito.value}")
+            Log.d(TAG, "Valor MYHASHMAP en RemitoFragment = ${remitoViewModel.myHashMap}")
         }
 
+        remitoViewModel.postRemito.observe(viewLifecycleOwner, {
+            Log.d(TAG, "Valor del live data observer = ${remitoViewModel.postRemito.value}")
+        })
 
         return binding.root
     }
@@ -68,19 +74,8 @@ class RemitoFragment : Fragment(){
 
         remitoViewModel.responseRemito.observe(viewLifecycleOwner, {
             remitoAdapter.remitos = it
-            Log.d(TAG, remitoAdapter.checkBoxStatesArray.toString())
-
         })
     }
-
-//    private fun sendDataPost(){
-//        remitoViewModel.postRemitos(remitoAdapter.hashMap)
-//        Log.d(TAG, "Datos enviados ${remitoAdapter.hashMap}")
-//    }
-
-//    private fun getEpcRemito(){
-//        remitoViewModel.getEpcofRemitos()
-//    }
 
     companion object{
         const val TAG = "RemitoFragment"

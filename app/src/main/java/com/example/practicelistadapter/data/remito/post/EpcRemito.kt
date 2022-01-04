@@ -1,8 +1,6 @@
-package com.example.practicelistadapter
+package com.example.practicelistadapter.data.remito.post
 
-import com.example.practicelistadapter.data.Remito
-
-data class GetEpcRemito (
+data class EpcRemito (
     val epc: String,
     val articulo: String
 ){
@@ -10,7 +8,7 @@ data class GetEpcRemito (
         if(javaClass != other?.javaClass){
             return false
         }
-        other as GetEpcRemito
+        other as EpcRemito
         if(epc != other.epc){
             return false
         }
@@ -22,6 +20,6 @@ data class GetEpcRemito (
 
 
     override fun toString(): String {
-        return "Etiquetas (Epc: $epc, Articulo: $articulo)"
+        return "Etiquetas (epc = $epc, articulo = $articulo)"
     }
 }

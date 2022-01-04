@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/remitoFragment"
-        android:name="com.example.practicelistadapter.RemitoFragment"
+        android:name="com.example.practicelistadapter.fragment.RemitoFragment"
         android:label="fragment_remito"
         tools:layout="@layout/fragment_remito" />
 </navigation>

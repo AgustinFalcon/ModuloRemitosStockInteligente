@@ -1,18 +1,14 @@
-package com.example.practicelistadapter
+package com.example.practicelistadapter.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.practicelistadapter.data.Remito
-import com.example.practicelistadapter.data.RemitoResponse
-import com.google.gson.GsonBuilder
-import com.google.gson.JsonParser
+import com.example.practicelistadapter.data.remito.get.Remito
+import com.example.practicelistadapter.data.remito.post.EpcRemito
+import com.example.practicelistadapter.repository.RemitoRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import okhttp3.internal.notify
 import javax.inject.Inject
 
 
@@ -24,13 +20,15 @@ class RemitoViewModel @Inject constructor(private val remitoRepository: RemitoRe
     val responseRemito: MutableLiveData<List<Remito>>
         get() = _responseRemito
 
-    private val _postRemito = MutableLiveData<List<GetEpcRemito>>()
-    val postRemito: MutableLiveData<List<GetEpcRemito>>
+    private val _postRemito = MutableLiveData<List<EpcRemito>>()
+    val postRemito: MutableLiveData<List<EpcRemito>>
         get() = _postRemito
 
+    val myHashMap = HashMap<String, String>()
 
     init {
         getAllRemitos()
+        print("valor del live data en el view model = $postRemito")
     }
 
     private fun getAllRemitos() {
@@ -45,12 +43,18 @@ class RemitoViewModel @Inject constructor(private val remitoRepository: RemitoRe
         }
     }
 
-    fun postRemitos(remitos: HashMap<String, String>){
+    fun sendData(remitos: HashMap<String, String>){
         viewModelScope.launch {
             remitoRepository.sendRemitos(remitos).let { response ->
                 if(response.isSuccessful){
                     _postRemito.postValue(response.body()?.etiquetas)
-                    Log.d(TAG, "Contenido2: ${response.body()}")
+
+                    //Put the data in a HashMap for access to content to compare with gun data
+                    response.body()?.etiquetas?.forEach {
+                        myHashMap[it.epc] = it.articulo
+                    }
+                    Log.d(TAG, "Contenido live data: ${postRemito.value}") //Porque aparece como null si se supone que lo lleno antes
+                    Log.d(TAG, "Contenido de MYHASHMAP $myHashMap")
                 }else{
                     Log.d(TAG, "Error code: ${response.code()}")
                     Log.d(TAG, "Error del post: ${response.errorBody()}")
@@ -58,6 +62,9 @@ class RemitoViewModel @Inject constructor(private val remitoRepository: RemitoRe
             }
         }
     }
+
+
+    //Implement logic compare data of postRemito with data get the gun
 
 
 

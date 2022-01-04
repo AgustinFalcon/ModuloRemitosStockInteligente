@@ -1,5 +1,6 @@
-package com.example.practicelistadapter
+package com.example.practicelistadapter.repository
 
+import com.example.practicelistadapter.service.ApiService
 import javax.inject.Inject
 
 class RemitoRepository @Inject constructor(private val apiService: ApiService){

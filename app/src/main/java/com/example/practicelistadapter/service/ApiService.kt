@@ -1,9 +1,9 @@
-package com.example.practicelistadapter
+package com.example.practicelistadapter.service
 
-import androidx.navigation.Navigator
 import com.example.practicelistadapter.data.Constans
-import com.example.practicelistadapter.data.Remito
-import com.example.practicelistadapter.data.RemitoResponse
+import com.example.practicelistadapter.data.remito.get.RemitoResponse
+import com.example.practicelistadapter.data.remito.post.EpcRemito
+import com.example.practicelistadapter.data.remito.post.EpcRemitoResponse
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -16,13 +16,7 @@ interface ApiService {
 
     @Multipart
     @POST(Constans.END_POINT_POST_REMITO)
-    suspend fun sendRemitos(@Part("remitos")remitos: HashMap<String, String>) :Response<GetEpcRemitoResponse>
-
-    //The url for the post and this get are the same
-    //@GET(Constans.END_POINT_POST_REMITO)
-    //suspend fun getEpcofRemitos(): Response<GetEpcRemitoResponse>
-
-
+    suspend fun sendRemitos(@Part("remitos")remitos: HashMap<String, String>) :Response<EpcRemitoResponse>
 
 
     //First intent use @Multipart with @PartMap  || 9:34

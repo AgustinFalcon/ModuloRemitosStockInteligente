@@ -1,4 +1,4 @@
-package com.example.practicelistadapter.data
+package com.example.practicelistadapter.data.remito.get
 
 data class Remito(
     val cantidad: String,
