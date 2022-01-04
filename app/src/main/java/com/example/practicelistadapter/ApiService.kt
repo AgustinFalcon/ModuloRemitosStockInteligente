@@ -14,8 +14,9 @@ interface ApiService {
     suspend fun getAllRemitos(): Response<RemitoResponse>
 
 
+    @Multipart
     @POST(Constans.END_POINT_POST_REMITO)
-    suspend fun sendRemitos(@Body remitos: HashMap<String, String>) :Response<RemitoResponse>
+    suspend fun sendRemitos(@Part("remitos")remitos: HashMap<String, String>) :Response<RemitoResponse>
 
     //The url for the post and this get are the same
     //@GET(Constans.END_POINT_POST_REMITO)
@@ -27,7 +28,7 @@ interface ApiService {
     //First intent use @Multipart with @PartMap  || 9:34
     //Second intent use @FormUrlEncoded with @Field("remitos")  || 9:39
     //Third intent use @FormUrlEncoded with @FieldMap(encoded = true)  ||  9:47
-    //Fourth intent use @Multipart with @Part("remitos")   ||  9:50
+    //Fourth intent use @Multipart with @Part("remitos")   ||  9:50 IS THIS
     //Fifth intent use @Body     || 9:54
 
 
