@@ -1,11 +1,11 @@
 package com.example.practicelistadapter
 
+import androidx.navigation.Navigator
 import com.example.practicelistadapter.data.Constans
+import com.example.practicelistadapter.data.Remito
 import com.example.practicelistadapter.data.RemitoResponse
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface ApiService {
 
@@ -13,10 +13,22 @@ interface ApiService {
     @GET(Constans.END_POINT_REMITO)
     suspend fun getAllRemitos(): Response<RemitoResponse>
 
+
     @POST(Constans.END_POINT_POST_REMITO)
-    suspend fun sendRemitos(@Body remitos: HashMap<Int, String>) :Response<RemitoResponse>
+    suspend fun sendRemitos(@Body remitos: HashMap<String, String>) :Response<RemitoResponse>
 
     //The url for the post and this get are the same
-    @GET(Constans.END_POINT_POST_REMITO)
-    suspend fun getEpcofRemitos(): Response<GetEpcRemitoResponse>
+    //@GET(Constans.END_POINT_POST_REMITO)
+    //suspend fun getEpcofRemitos(): Response<GetEpcRemitoResponse>
+
+
+
+
+    //First intent use @Multipart with @PartMap  || 9:34
+    //Second intent use @FormUrlEncoded with @Field("remitos")  || 9:39
+    //Third intent use @FormUrlEncoded with @FieldMap(encoded = true)  ||  9:47
+    //Fourth intent use @Multipart with @Part("remitos")   ||  9:50
+    //Fifth intent use @Body     || 9:54
+
+
 }

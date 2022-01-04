@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.practicelistadapter.databinding.FragmentRemitoBinding
 import com.example.practicelistadapter.databinding.ItemRecyclerviewBinding
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -34,6 +35,24 @@ class RemitoFragment : Fragment(){
         itemRemitoBinding = ItemRecyclerviewBinding.inflate(layoutInflater, myItemView as ViewGroup, false)
         setUpRecyclerView()
 
+        //Clicked button
+        binding.btnPostDetailsRemitos.setOnClickListener {
+            //Send the data selected
+            remitoViewModel.postRemitos(remitoAdapter.hashMap)
+            Log.d(TAG, "Datos enviados ${remitoAdapter.hashMap}")
+
+            Snackbar.make(requireView(), "Datos enviados al servidor", Snackbar.LENGTH_SHORT).show()
+            remitoAdapter.checkBoxStatesArray.forEach{ i: Int, b: Boolean ->
+                if(b){
+                    hashMap[i] = b
+                }
+            }
+            Log.d(TAG, "Mine array1 $hashMap")
+            hashMap.clear()
+            Log.d(TAG, "Array of adapter ${remitoAdapter.checkBoxStatesArray}")
+
+            Log.d(TAG, "Valor del post en RemitoFragment = ${remitoViewModel.postRemito.value}")
+        }
 
 
         return binding.root
@@ -51,36 +70,17 @@ class RemitoFragment : Fragment(){
             remitoAdapter.remitos = it
             Log.d(TAG, remitoAdapter.checkBoxStatesArray.toString())
 
-            //Clicked button
-            binding.btnPostDetailsRemitos.setOnClickListener {
-                //Send the data selected
-                sendDataPost()
-
-                Log.d(TAG, "Post: ${remitoViewModel.postRemitos(remitoAdapter.hashMap)}")
-                remitoAdapter.checkBoxStatesArray.forEach{ i: Int, b: Boolean ->
-                    if(b){
-                        hashMap[i] = b
-                    }
-                }
-                Log.d(TAG, "Mine array1 $hashMap")
-                hashMap.clear()
-                Log.d(TAG, "Mine array2 $hashMap")
-                Log.d(TAG, "Array of adapter ${remitoAdapter.checkBoxStatesArray}")
-
-                //Get the remitos selected
-                getEpcRemito()
-                Log.d(TAG, "Get epcs with remitos selected: ${getEpcRemito()}")
-            }
         })
     }
 
-    private fun sendDataPost(){
-        remitoViewModel.postRemitos(remitoAdapter.hashMap)
-    }
+//    private fun sendDataPost(){
+//        remitoViewModel.postRemitos(remitoAdapter.hashMap)
+//        Log.d(TAG, "Datos enviados ${remitoAdapter.hashMap}")
+//    }
 
-    private fun getEpcRemito(){
-        remitoViewModel.getEpcofRemitos()
-    }
+//    private fun getEpcRemito(){
+//        remitoViewModel.getEpcofRemitos()
+//    }
 
     companion object{
         const val TAG = "RemitoFragment"

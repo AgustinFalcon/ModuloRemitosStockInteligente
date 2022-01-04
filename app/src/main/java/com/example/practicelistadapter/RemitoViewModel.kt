@@ -5,13 +5,19 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.practicelistadapter.data.Remito
+import com.example.practicelistadapter.data.RemitoResponse
+import com.google.gson.GsonBuilder
+import com.google.gson.JsonParser
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
 @HiltViewModel
 class RemitoViewModel @Inject constructor(private val remitoRepository: RemitoRepository) : ViewModel(){
+
 
     private val _responseRemito = MutableLiveData<List<Remito>>()
     val responseRemito: MutableLiveData<List<Remito>>
@@ -41,11 +47,12 @@ class RemitoViewModel @Inject constructor(private val remitoRepository: RemitoRe
         }
     }
 
-    fun postRemitos(remitos: HashMap<Int, String>){
+    fun postRemitos(remitos: HashMap<String, String>){
         viewModelScope.launch {
             remitoRepository.sendRemitos(remitos).let { response ->
                 if(response.isSuccessful){
                     _postRemito.postValue(response.body()?.remitos)
+                    Log.d(TAG, "Contenido: ${response.body()}")
                 }else{
                     Log.d(TAG, "Error code: ${response.code()}")
                     Log.d(TAG, "Error del post: ${response.errorBody()}")
@@ -54,18 +61,18 @@ class RemitoViewModel @Inject constructor(private val remitoRepository: RemitoRe
         }
     }
 
-    fun getEpcofRemitos() {
-        viewModelScope.launch {
-            remitoRepository.getEpcofRemitos().let { response ->
-                if(response.isSuccessful){
-                    _getEpcofRemito.postValue(response.body()?.epcRemito)
-                }else{
-                    Log.d(TAG, "Error code: ${response.code()}")
-                    Log.d(TAG, "Error del post: ${response.errorBody()}")
-                }
-            }
-        }
-    }
+//    fun getEpcofRemitos() {
+//        viewModelScope.launch {
+//            remitoRepository.getEpcofRemitos().let { response ->
+//                if(response.isSuccessful){
+//                    _getEpcofRemito.postValue(response.body()?.epcRemito)
+//                }else{
+//                    Log.d(TAG, "Error code: ${response.code()}")
+//                    Log.d(TAG, "Error del post: ${response.errorBody()}")
+//                }
+//            }
+//        }
+//    }
 
     companion object{
         const val TAG = "RemitoViewModel"

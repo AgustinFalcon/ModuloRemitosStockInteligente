@@ -14,7 +14,7 @@ import com.example.practicelistadapter.databinding.ItemRecyclerviewBinding
 
 class RemitoAdapter() : RecyclerView.Adapter<RemitoAdapter.MyViewHolder>() {
 
-    var hashMap: HashMap<Int, String> = HashMap()
+    var hashMap: HashMap<String, String> = HashMap()
     var checkBoxStatesArray = SparseBooleanArray()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -61,12 +61,15 @@ class RemitoAdapter() : RecyclerView.Adapter<RemitoAdapter.MyViewHolder>() {
                 if(!checkBoxStatesArray.get(adapterPosition, false)){
                     checkbox.isChecked = true
                     checkBoxStatesArray.put(adapterPosition, true)
-                    //Ver como le paso estos datos al post
-                    hashMap[adapterPosition] = remitos[adapterPosition].codigo
+                    //When is clicked put that value in a HashMap {position : code} of remito
+                    if(checkBoxStatesArray.get(adapterPosition)) {
+                        hashMap[adapterPosition.toString()] = remitos[adapterPosition].codigo
+                    }
                 }else{
                     checkbox.isChecked = false
                     checkBoxStatesArray.put(adapterPosition, false)
-                    hashMap.remove(adapterPosition)
+                    //If isn't clicked remove that position of HashMap
+                    hashMap.remove(adapterPosition.toString())
                 }
             }
         }
