@@ -16,7 +16,7 @@ interface ApiService {
 
     @Multipart
     @POST(Constans.END_POINT_POST_REMITO)
-    suspend fun sendRemitos(@Part("remitos")remitos: HashMap<String, String>) :Response<RemitoResponse>
+    suspend fun sendRemitos(@Part("remitos")remitos: HashMap<String, String>) :Response<GetEpcRemitoResponse>
 
     //The url for the post and this get are the same
     //@GET(Constans.END_POINT_POST_REMITO)

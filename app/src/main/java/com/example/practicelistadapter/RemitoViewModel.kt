@@ -12,6 +12,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import okhttp3.internal.notify
 import javax.inject.Inject
 
 
@@ -23,13 +24,10 @@ class RemitoViewModel @Inject constructor(private val remitoRepository: RemitoRe
     val responseRemito: MutableLiveData<List<Remito>>
         get() = _responseRemito
 
-    private val _postRemito = MutableLiveData<List<Remito>>()
-    val postRemito: MutableLiveData<List<Remito>>
+    private val _postRemito = MutableLiveData<List<GetEpcRemito>>()
+    val postRemito: MutableLiveData<List<GetEpcRemito>>
         get() = _postRemito
 
-    private val _getEpcofRemito = MutableLiveData<List<GetEpcRemito>>()
-    val getEpcofRemito: MutableLiveData<List<GetEpcRemito>>
-        get() = _getEpcofRemito
 
     init {
         getAllRemitos()
@@ -51,8 +49,8 @@ class RemitoViewModel @Inject constructor(private val remitoRepository: RemitoRe
         viewModelScope.launch {
             remitoRepository.sendRemitos(remitos).let { response ->
                 if(response.isSuccessful){
-                    _postRemito.postValue(response.body()?.remitos)
-                    Log.d(TAG, "Contenido: ${response.body()}")
+                    _postRemito.postValue(response.body()?.etiquetas)
+                    Log.d(TAG, "Contenido2: ${response.body()}")
                 }else{
                     Log.d(TAG, "Error code: ${response.code()}")
                     Log.d(TAG, "Error del post: ${response.errorBody()}")
@@ -61,18 +59,7 @@ class RemitoViewModel @Inject constructor(private val remitoRepository: RemitoRe
         }
     }
 
-//    fun getEpcofRemitos() {
-//        viewModelScope.launch {
-//            remitoRepository.getEpcofRemitos().let { response ->
-//                if(response.isSuccessful){
-//                    _getEpcofRemito.postValue(response.body()?.epcRemito)
-//                }else{
-//                    Log.d(TAG, "Error code: ${response.code()}")
-//                    Log.d(TAG, "Error del post: ${response.errorBody()}")
-//                }
-//            }
-//        }
-//    }
+
 
     companion object{
         const val TAG = "RemitoViewModel"
