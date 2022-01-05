@@ -28,7 +28,6 @@ class RemitoViewModel @Inject constructor(private val remitoRepository: RemitoRe
 
     init {
         getAllRemitos()
-        print("valor del live data en el view model = $postRemito")
     }
 
     private fun getAllRemitos() {
@@ -43,7 +42,7 @@ class RemitoViewModel @Inject constructor(private val remitoRepository: RemitoRe
         }
     }
 
-    fun sendData(remitos: HashMap<String, String>){
+    fun sendData(remitos: HashMap<Int, String>){
         viewModelScope.launch {
             remitoRepository.sendRemitos(remitos).let { response ->
                 if(response.isSuccessful){

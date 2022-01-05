@@ -20,6 +20,6 @@ data class EpcRemito (
 
 
     override fun toString(): String {
-        return "Etiquetas (epc = $epc, articulo = $articulo)"
+        return "etiquetas (epc = $epc, articulo = $articulo)"
     }
 }

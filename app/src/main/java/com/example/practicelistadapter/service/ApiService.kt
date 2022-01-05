@@ -16,7 +16,7 @@ interface ApiService {
 
     @Multipart
     @POST(Constans.END_POINT_POST_REMITO)
-    suspend fun sendRemitos(@Part("remitos")remitos: HashMap<String, String>) :Response<EpcRemitoResponse>
+    suspend fun sendRemitos(@Part("remitos")remitos: HashMap<Int, String>) :Response<EpcRemitoResponse>
 
 
     //First intent use @Multipart with @PartMap  || 9:34

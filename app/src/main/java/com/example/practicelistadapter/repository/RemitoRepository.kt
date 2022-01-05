@@ -7,7 +7,7 @@ class RemitoRepository @Inject constructor(private val apiService: ApiService){
 
     suspend fun getAllRemitos() = apiService.getAllRemitos()
 
-    suspend fun sendRemitos(remitos: HashMap<String, String>) = apiService.sendRemitos(remitos)
+    suspend fun sendRemitos(remitos: HashMap<Int, String>) = apiService.sendRemitos(remitos)
 
     //suspend fun getEpcofRemitos() = apiService.getEpcofRemitos()
 }
