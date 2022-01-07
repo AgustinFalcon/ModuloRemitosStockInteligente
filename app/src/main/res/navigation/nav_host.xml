@@ -9,5 +9,15 @@
         android:id="@+id/remitoFragment"
         android:name="com.example.practicelistadapter.fragment.RemitoFragment"
         android:label="fragment_remito"
-        tools:layout="@layout/fragment_remito" />
+        tools:layout="@layout/fragment_remito" >
+        <action
+            android:id="@+id/action_remitoFragment_to_filterEpcFragment"
+            app:destination="@id/filterEpcFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/filterEpcFragment"
+        android:name="com.example.practicelistadapter.FilterEpcFragment"
+        android:label="fragment_filter_epc"
+        tools:layout="@layout/fragment_filter_epc" />
 </navigation>
