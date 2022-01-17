@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.practicelistadapter.adapter.FilterEpcAdapter
 import com.example.practicelistadapter.databinding.FragmentFilterEpcBinding
@@ -36,27 +35,31 @@ class FilterEpcFragment : Fragment() {
         _binding = FragmentFilterEpcBinding.inflate(layoutInflater, container, false)
 
 
-        remitoViewModel.postRemito.observe(viewLifecycleOwner, {
-            setUpRecyclerView()
-        })
+
+        setUpRecyclerView()
+        Log.d(TAG, "Valor del POST FilterEpc = ${remitoViewModel.postRemito.value}")
 
 
         return binding.root
     }
 
     private fun setUpRecyclerView(){
-        filterEpcAdapter = FilterEpcAdapter(remitoViewModel.myHashMap)
+        filterEpcAdapter = FilterEpcAdapter(remitoViewModel.postRemito.value!!)
         binding.rvFilterEpc.apply {
             adapter = filterEpcAdapter
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
         }
-        Log.d(TAG, "Valor del remitoHashMap = ${remitoViewModel.myHashMap}")
     }
 
 
     companion object {
         const val TAG = "FilterEpcFragment"
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 
 }

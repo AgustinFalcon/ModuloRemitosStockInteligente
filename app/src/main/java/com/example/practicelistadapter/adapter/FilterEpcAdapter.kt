@@ -1,13 +1,15 @@
 package com.example.practicelistadapter.adapter
 
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.practicelistadapter.data.remito.post.EpcRemito
 import com.example.practicelistadapter.databinding.ItemFilterEpcFragmentBinding
 
 
-class FilterEpcAdapter(private val myHashMap: HashMap<String, String>) : RecyclerView.Adapter<FilterEpcAdapter.FilterEpcViewHolder>(){
+class FilterEpcAdapter(private val postRemito: List<EpcRemito>) : RecyclerView.Adapter<FilterEpcAdapter.FilterEpcViewHolder>(){
 
     inner class FilterEpcViewHolder(var binding: ItemFilterEpcFragmentBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -18,8 +20,9 @@ class FilterEpcAdapter(private val myHashMap: HashMap<String, String>) : Recycle
     }
 
     override fun onBindViewHolder(holder: FilterEpcViewHolder, position: Int) {
-        holder.binding.tvShowepc.text = myHashMap[position.toString()]
+        holder.binding.tvShowepc.text = postRemito[position].epc
+        Log.d("FilterEpcAdapter", "Valor del recyclerView = ${postRemito[position].epc}")
     }
 
-    override fun getItemCount(): Int = myHashMap.size
+    override fun getItemCount(): Int = postRemito.size
 }

@@ -8,6 +8,9 @@ import com.example.practicelistadapter.data.remito.get.Remito
 import com.example.practicelistadapter.data.remito.post.EpcRemito
 import com.example.practicelistadapter.repository.RemitoRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.android.awaitFrame
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -31,7 +34,7 @@ class RemitoViewModel @Inject constructor(private val remitoRepository: RemitoRe
     }
 
     private fun getAllRemitos() {
-        viewModelScope.launch {
+        CoroutineScope(Dispatchers.IO).launch {
             remitoRepository.getAllRemitos().let { response ->
                 if(response.isSuccessful){
                     _responseRemito.postValue(response.body()?.remitos)
@@ -43,7 +46,7 @@ class RemitoViewModel @Inject constructor(private val remitoRepository: RemitoRe
     }
 
     fun sendData(remitos: HashMap<Int, String>){
-        viewModelScope.launch {
+        CoroutineScope(Dispatchers.IO).launch {
             remitoRepository.sendRemitos(remitos).let { response ->
                 if(response.isSuccessful){
                     _postRemito.postValue(response.body()?.etiquetas)
@@ -52,6 +55,9 @@ class RemitoViewModel @Inject constructor(private val remitoRepository: RemitoRe
                     response.body()?.etiquetas?.forEach {
                         myHashMap[it.epc] = it.articulo
                     }
+
+                    awaitFrame()
+
                     Log.d(TAG, "Contenido live data: ${postRemito.value}") //Porque aparece como null si se supone que lo lleno antes
                     Log.d(TAG, "Contenido de MYHASHMAP $myHashMap")
                 }else{

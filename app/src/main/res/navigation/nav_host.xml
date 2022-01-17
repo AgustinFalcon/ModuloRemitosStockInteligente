@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/filterEpcFragment"
-        android:name="com.example.practicelistadapter.FilterEpcFragment"
+        android:name="com.example.practicelistadapter.fragment.FilterEpcFragment"
         android:label="fragment_filter_epc"
         tools:layout="@layout/fragment_filter_epc" />
 </navigation>
