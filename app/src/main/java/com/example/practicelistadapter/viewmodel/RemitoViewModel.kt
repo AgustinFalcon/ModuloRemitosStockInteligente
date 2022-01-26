@@ -19,6 +19,10 @@ import javax.inject.Inject
 class RemitoViewModel @Inject constructor(private val remitoRepository: RemitoRepository) : ViewModel(){
 
 
+     val tagEpcs: List<String> = listOf("008100068750252315000024", "008100068750252314000013", "008100068750252313000024",
+        "00810006875000231500006B", "008100068750002314000032", "008100068750002312000034", "00810006875000231300006C").toMutableList()
+
+
     private val _responseRemito = MutableLiveData<List<Remito>>()
     val responseRemito: MutableLiveData<List<Remito>>
         get() = _responseRemito
